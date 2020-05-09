@@ -10,7 +10,7 @@ const initialState = {
 const geolocationReducer = (state = initialState, action) => {
   switch (action.type) {
     // Store geolocation permission status
-    case "STORE_GEOLOCATION_PERMISSION_STATUS": {
+    case 'STORE_GEOLOCATION_PERMISSION_STATUS': {
       return {
         // State
         ...state,
@@ -19,7 +19,7 @@ const geolocationReducer = (state = initialState, action) => {
       };
     }
     // Store if geolocation permission has been requested
-    case "STORE_IS_GEOLOCATION_PERMISSION_REQUESTED": {
+    case 'STORE_IS_GEOLOCATION_PERMISSION_REQUESTED': {
       return {
         // State
         ...state,
@@ -29,7 +29,7 @@ const geolocationReducer = (state = initialState, action) => {
       };
     }
     // Store geolocation
-    case "STORE_GEOLOCATION": {
+    case 'STORE_GEOLOCATION': {
       return {
         // State
         ...state,

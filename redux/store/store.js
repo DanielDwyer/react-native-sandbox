@@ -1,6 +1,7 @@
 // Imports: Dependencies
 import { AsyncStorage } from 'react-native';
 import { createStore, applyMiddleware } from 'redux';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { createLogger } from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
@@ -34,7 +35,7 @@ const store = createStore(
   ),
 );
 // Middleware: Redux Persist Persister
-let persistor = persistStore(store);
+const persistor = persistStore(store);
 // Exports
 export {
   store,

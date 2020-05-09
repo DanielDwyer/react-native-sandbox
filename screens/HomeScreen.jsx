@@ -1,79 +1,86 @@
+/* eslint-disable global-require */
+/* eslint-disable no-use-before-define */
+/* eslint-disable react/prop-types */
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Image, Platform, StyleSheet, Text, TouchableOpacity, View,
+} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 
 // Imports: Redux Actions
-import { 
+import {
   getGeolocationPermissionStatus,
   requestGeolocationPermission,
-  getGeolocation, 
+  getGeolocation,
 } from '../redux/actions/geolocationActions';
 
 import { MonoText } from '../components/StyledText';
 
 class HomeScreen extends React.Component {
   async componentDidMount() {
-    this.props.getGeolocationPermissionStatus();
-    if (this.props.geolocationPermissionStatus !== 'granted') {
-      this.props.requestGeolocationPermission();
-    }
+    getGeolocationPermissionStatus();
+    const { geolocationPermissionStatus } = this.props;
+    // eslint-disable-next-line react/destructuring-assignment
+    if (geolocationPermissionStatus !== 'granted') this.props.requestGeolocationPermission();
   }
 
   render() {
     return (
-    <View style={styles.container}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <View style={styles.welcomeContainer}>
-          <Image
-            source={
+      <View style={styles.container}>
+        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+          <View style={styles.welcomeContainer}>
+            <Image
+              source={
+              // eslint-disable-next-line no-undef
               __DEV__
                 ? require('../assets/images/robot-dev.png')
                 : require('../assets/images/robot-prod.png')
             }
-            style={styles.welcomeImage}
-          />
-        </View>
-
-        <View style={styles.getStartedContainer}>
-          <DevelopmentModeNotice />
-
-          <Text style={styles.getStartedText}>Open up the code for this screen:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-            <MonoText>screens/HomeScreen.js</MonoText>
+              style={styles.welcomeImage}
+            />
           </View>
 
-          <Text style={styles.getStartedText}>
-            Change any of the text, save the file, and your app will automatically reload.
-          </Text>
-        </View>
+          <View style={styles.getStartedContainer}>
+            <DevelopmentModeNotice />
 
-        <View style={styles.helpContainer}>
-          <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-            <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+            <Text style={styles.getStartedText}>Open up the code for this screen:</Text>
 
-      <View style={styles.tabBarInfoContainer}>
-        <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
+            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
+              <MonoText>screens/HomeScreen.js</MonoText>
+            </View>
 
-        <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-          <MonoText style={styles.codeHighlightText}>navigation/BottomTabNavigator.js</MonoText>
+            <Text style={styles.getStartedText}>
+              Change any of the text, save the file, and your app will automatically reload.
+            </Text>
+          </View>
+
+          <View style={styles.helpContainer}>
+            <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
+              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+
+        <View style={styles.tabBarInfoContainer}>
+          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
+
+          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
+            <MonoText style={styles.codeHighlightText}>navigation/BottomTabNavigator.js</MonoText>
+          </View>
         </View>
       </View>
-    </View>
-  );
+    );
+  }
 }
-};
 
 HomeScreen.navigationOptions = {
   header: null,
 };
 
 function DevelopmentModeNotice() {
+  // eslint-disable-next-line no-undef
   if (__DEV__) {
     const learnMoreButton = (
       <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
@@ -84,16 +91,17 @@ function DevelopmentModeNotice() {
     return (
       <Text style={styles.developmentModeText}>
         Development mode is enabled: your app will be slower but you can use useful development
-        tools. {learnMoreButton}
-      </Text>
-    );
-  } else {
-    return (
-      <Text style={styles.developmentModeText}>
-        You are not in development mode: your app will run at full speed.
+        tools.
+        {' '}
+        {learnMoreButton}
       </Text>
     );
   }
+  return (
+    <Text style={styles.developmentModeText}>
+      You are not in development mode: your app will run at full speed.
+    </Text>
+  );
 }
 
 function handleLearnMorePress() {
@@ -102,30 +110,26 @@ function handleLearnMorePress() {
 
 function handleHelpPress() {
   WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
+    'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change',
   );
 }
 
 // Map State To Props (Redux Store Passes State To Component)
-const mapStateToProps = (state) => {
-  // Redux Store --> Component
-  return {
-    geolocation: state.geolocationReducer.geolocation,
-    isGeolocationPermissionRequested: state.geolocationReducer.isGeolocationPermissionRequested,
-    geolocationPermissionStatus: state.geolocationReducer.geolocationPermissionStatus,
-  };
-};
-// Map Dispatch To Props (Dispatch Actions To Reducers. Reducers Then Modify The Data And Assign It To Your Props)
-const mapDispatchToProps = (dispatch) => {
-  // Action
-  return {
-    // Store geolocaction
-    getGeolocationPermissionStatus: () => dispatch(getGeolocationPermissionStatus()),
-    requestGeolocationPermission: () => dispatch(requestGeolocationPermission()),
-    getGeolocation: () => dispatch(getGeolocation()),
-  };
-};
-
+// Redux Store --> Component
+const mapStateToProps = (state) => ({
+  geolocation: state.geolocationReducer.geolocation,
+  isGeolocationPermissionRequested: state.geolocationReducer.isGeolocationPermissionRequested,
+  geolocationPermissionStatus: state.geolocationReducer.geolocationPermissionStatus,
+});
+// Map Dispatch To Props (Dispatch Actions To Reducers. Reducers
+// Then Modify The Data And Assign It To Your Props)
+// Action
+const mapDispatchToProps = (dispatch) => ({
+  // Store geolocaction
+  getGeolocationPermissionStatus: () => dispatch(getGeolocationPermissionStatus()),
+  requestGeolocationPermission: () => dispatch(requestGeolocationPermission()),
+  getGeolocation: () => dispatch(getGeolocation()),
+});
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -1,8 +1,9 @@
-import * as Permissions from "expo-permissions";
+import * as Permissions from 'expo-permissions';
+import * as Location from 'expo-location';
 
 // Store geolocation permission status
 const storeGeolocationPermissionStatus = (geolocationPermissionStatus) => ({
-  type: "STORE_GEOLOCATION_PERMISSION_STATUS",
+  type: 'STORE_GEOLOCATION_PERMISSION_STATUS',
   geolocationPermissionStatus,
 });
 
@@ -24,9 +25,20 @@ export const getGeolocationPermissionStatus = () => async (dispatch) => {
     // status options: granted or denied
     const { status } = await Permissions.getAsync(Permissions.LOCATION);
     dispatch(storeGeolocationPermissionStatus(status));
-  } catch(error) {
+  } catch (error) {
     // TODO Handle error
-    console.log('error:', error);
+    console.log('(getGeolocationPermissionStatus) error:', error);
+  }
+};
+
+// Get geolocation
+export const getGeolocation = () => async (dispatch) => {
+  try {
+    const position = await Location.getCurrentPositionAsync({ enableHighAccuracy: true });
+    dispatch(storeGeolocation(position));
+  } catch (error) {
+    // TODO Handle error
+    console.log('(getGeolocation) error:', error);
   }
 };
 
@@ -34,21 +46,11 @@ export const getGeolocationPermissionStatus = () => async (dispatch) => {
 export const requestGeolocationPermission = () => async (dispatch) => {
   try {
     // status options: granted or denied
-    const { status, permissions } = await Permissions.askAsync(Permissions.LOCATION);
+    const { status } = await Permissions.askAsync(Permissions.LOCATION);
     dispatch(storeIsGeolocationPermissionRequested(status));
+    if (status === 'granted') dispatch(getGeolocation());
   } catch (error) {
     // TODO Handle error
-    console.log('error:', error);
-  }
-};
-
-// Get geolocation
-export const getGeolocation = () => (dispatch) => {
-  try {
-    const position = Location.getCurrentPositionAsync({ enableHighAccuracy: true });
-    dispatch(storeGeolocation(position));
-  } catch (error) {
-    // TODO Handle error
-    console.log('error:', error);
+    console.log('(requestGeolocationPermission) error:', error);
   }
 };
