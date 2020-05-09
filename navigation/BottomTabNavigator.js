@@ -62,5 +62,9 @@ function getHeaderTitle(route) {
       return 'How to get started';
     case 'Links':
       return 'Links to learn more';
+    case 'SandBox':
+      return 'How to get started';
+    case 'Counter':
+      return 'Links to learn more';
   }
 }

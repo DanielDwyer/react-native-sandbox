@@ -2,11 +2,27 @@ import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
+
+// Imports: Redux Actions
+import { 
+  getGeolocationPermissionStatus,
+  requestGeolocationPermission,
+  getGeolocation, 
+} from '../redux/actions/geolocationActions';
 
 import { MonoText } from '../components/StyledText';
 
-export default function HomeScreen() {
-  return (
+class HomeScreen extends React.Component {
+  async componentDidMount() {
+    this.props.getGeolocationPermissionStatus();
+    console.log('this.state:', this.state.geolocationPermissionStatus);
+    // this.props.getGeolocation();
+    // this.props.getGeolocation();
+  }
+
+  render() {
+    return (
     <View style={styles.container}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.welcomeContainer}>
@@ -51,6 +67,7 @@ export default function HomeScreen() {
     </View>
   );
 }
+};
 
 HomeScreen.navigationOptions = {
   header: null,
@@ -88,6 +105,26 @@ function handleHelpPress() {
     'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
   );
 }
+
+// Map State To Props (Redux Store Passes State To Component)
+const mapStateToProps = (state) => {
+  // Redux Store --> Component
+  return {
+    geolocation: state.geolocationReducer.geolocation,
+    isGeolocationPermissionRequested: state.geolocationReducer.isGeolocationPermissionRequested,
+    geolocationPermissionStatus: state.geolocationReducer.geolocationPermissionStatus,
+  };
+};
+// Map Dispatch To Props (Dispatch Actions To Reducers. Reducers Then Modify The Data And Assign It To Your Props)
+const mapDispatchToProps = (dispatch) => {
+  // Action
+  return {
+    // Store geolocaction
+    getGeolocationPermissionStatus: () => dispatch(getGeolocationPermissionStatus()),
+    requestGeolocationPermission: () => dispatch(requestGeolocationPermission()),
+    getGeolocation: () => dispatch(getGeolocation()),
+  };
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -177,3 +214,6 @@ const styles = StyleSheet.create({
     color: '#2e78b7',
   },
 });
+
+// Exports
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
