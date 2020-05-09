@@ -16,9 +16,9 @@ import { MonoText } from '../components/StyledText';
 class HomeScreen extends React.Component {
   async componentDidMount() {
     this.props.getGeolocationPermissionStatus();
-    console.log('this.state:', this.state.geolocationPermissionStatus);
-    // this.props.getGeolocation();
-    // this.props.getGeolocation();
+    if (this.props.geolocationPermissionStatus !== 'granted') {
+      this.props.requestGeolocationPermission();
+    }
   }
 
   render() {
