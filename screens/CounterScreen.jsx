@@ -1,6 +1,4 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-use-before-define */
-/* eslint-disable react/prefer-stateless-function */
 // Imports: Dependencies
 import React from 'react';
 import {
@@ -13,6 +11,7 @@ import { login } from '../redux/actions/authActions';
 import { increaseCounter, decreaseCounter } from '../redux/actions/counterActions';
 
 // Screen: Counter
+// eslint-disable-next-line react/prefer-stateless-function
 class CounterScreen extends React.Component {
   render() {
     const {
@@ -47,6 +46,25 @@ class CounterScreen extends React.Component {
     );
   }
 }
+
+// Map State To Props (Redux Store Passes State To Component)
+// Redux Store --> Component
+const mapStateToProps = (state) => ({
+  counter: state.counterReducer.counter,
+  loggedIn: state.authReducer.loggedIn,
+});
+// Map Dispatch To Props (Dispatch Actions To Reducers. Reducers Then Modify The
+// Data And Assign It To Your Props)
+// Action
+const mapDispatchToProps = (dispatch) => ({
+  // Increase Counter
+  reduxIncreaseCounter: () => dispatch(increaseCounter()),
+  // Decrease Counter
+  reduxDecreaseCounter: () => dispatch(decreaseCounter()),
+  // Login
+  reduxLogin: (trueFalse) => dispatch(login(trueFalse)),
+});
+
 // Styles
 const styles = StyleSheet.create({
   container: {
@@ -97,23 +115,6 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     marginRight: 40,
   },
-});
-// Map State To Props (Redux Store Passes State To Component)
-// Redux Store --> Component
-const mapStateToProps = (state) => ({
-  counter: state.counterReducer.counter,
-  loggedIn: state.authReducer.loggedIn,
-});
-// Map Dispatch To Props (Dispatch Actions To Reducers. Reducers Then Modify The
-// Data And Assign It To Your Props)
-// Action
-const mapDispatchToProps = (dispatch) => ({
-  // Increase Counter
-  reduxIncreaseCounter: () => dispatch(increaseCounter()),
-  // Decrease Counter
-  reduxDecreaseCounter: () => dispatch(decreaseCounter()),
-  // Login
-  reduxLogin: (trueFalse) => dispatch(login(trueFalse)),
 });
 
 // Exports

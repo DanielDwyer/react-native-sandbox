@@ -12,10 +12,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 
-import BottomTabNavigator from './navigation/BottomTabNavigator';
+import Navigation from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 // Imports: Redux Persist Persister
-import { store, persistor } from './redux/store/store.js';
+import { store, persistor } from './redux/store/store';
 
 const Stack = createStackNavigator();
 
@@ -63,7 +63,7 @@ export default function App(props) {
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
           <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
             <Stack.Navigator>
-              <Stack.Screen name="Root" component={BottomTabNavigator} />
+              <Stack.Screen name="Root" component={Navigation} />
             </Stack.Navigator>
           </NavigationContainer>
         </View>

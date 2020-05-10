@@ -1,5 +1,3 @@
-/* eslint-disable global-require */
-/* eslint-disable no-use-before-define */
 /* eslint-disable react/prop-types */
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
@@ -35,7 +33,9 @@ class HomeScreen extends React.Component {
               source={
               // eslint-disable-next-line no-undef
               __DEV__
+                // eslint-disable-next-line global-require
                 ? require('../assets/images/robot-dev.png')
+                // eslint-disable-next-line global-require
                 : require('../assets/images/robot-prod.png')
             }
               style={styles.welcomeImage}
@@ -121,6 +121,7 @@ const mapStateToProps = (state) => ({
   isGeolocationPermissionRequested: state.geolocationReducer.isGeolocationPermissionRequested,
   geolocationPermissionStatus: state.geolocationReducer.geolocationPermissionStatus,
 });
+
 // Map Dispatch To Props (Dispatch Actions To Reducers. Reducers
 // Then Modify The Data And Assign It To Your Props)
 // Action
@@ -130,6 +131,7 @@ const mapDispatchToProps = (dispatch) => ({
   requestGeolocationPermission: () => dispatch(requestGeolocationPermission()),
   getGeolocation: () => dispatch(getGeolocation()),
 });
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Image, Platform, StyleSheet, Text, TouchableOpacity, View,
+} from 'react-native';
 import { ScrollView, RectButton } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 
 
 import { MonoText } from '../components/StyledText';
@@ -16,8 +17,11 @@ export default function SandBoxScreen({ navigation }) {
         <View style={styles.welcomeContainer}>
           <Image
             source={
+              // eslint-disable-next-line no-undef
               __DEV__
+                // eslint-disable-next-line global-require
                 ? require('../assets/images/robot-dev.png')
+                // eslint-disable-next-line global-require
                 : require('../assets/images/robot-prod.png')
             }
             style={styles.welcomeImage}
@@ -30,7 +34,7 @@ export default function SandBoxScreen({ navigation }) {
           <OptionButton
             icon="md-compass"
             label="Read the React Navigation documentation"
-            onPress={() => navigation.navigate('Counter')}
+            onPress={() => navigation.navigate('Links')}
           />
 
           <Text style={styles.getStartedText}>Open up the code for this screen:</Text>
@@ -67,6 +71,7 @@ SandBoxScreen.navigationOptions = {
 };
 
 function DevelopmentModeNotice() {
+  // eslint-disable-next-line no-undef
   if (__DEV__) {
     const learnMoreButton = (
       <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
@@ -77,16 +82,17 @@ function DevelopmentModeNotice() {
     return (
       <Text style={styles.developmentModeText}>
         Development mode is enabled: your app will be slower but you can use useful development
-        tools. {learnMoreButton}
-      </Text>
-    );
-  } else {
-    return (
-      <Text style={styles.developmentModeText}>
-        You are not in development mode: your app will run at full speed.
+        tools.
+        {' '}
+        {learnMoreButton}
       </Text>
     );
   }
+  return (
+    <Text style={styles.developmentModeText}>
+      You are not in development mode: your app will run at full speed.
+    </Text>
+  );
 }
 
 function handleLearnMorePress() {
@@ -95,11 +101,13 @@ function handleLearnMorePress() {
 
 function handleHelpPress() {
   WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
+    'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change',
   );
 }
 
-function OptionButton({ icon, label, onPress, isLastOption }) {
+function OptionButton({
+  icon, label, onPress, isLastOption,
+}) {
   return (
     <RectButton style={[styles.option, isLastOption && styles.lastOption]} onPress={onPress}>
       <View style={{ flexDirection: 'row' }}>

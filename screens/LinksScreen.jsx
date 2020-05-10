@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
@@ -29,7 +30,9 @@ export default function LinksScreen() {
   );
 }
 
-function OptionButton({ icon, label, onPress, isLastOption }) {
+function OptionButton({
+  icon, label, onPress, isLastOption,
+}) {
   return (
     <RectButton style={[styles.option, isLastOption && styles.lastOption]} onPress={onPress}>
       <View style={{ flexDirection: 'row' }}>
