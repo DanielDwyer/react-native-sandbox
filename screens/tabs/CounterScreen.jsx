@@ -7,8 +7,8 @@ import {
 import { connect } from 'react-redux';
 
 // Imports: Redux Actions
-import { login } from '../redux/actions/authActions';
-import { increaseCounter, decreaseCounter } from '../redux/actions/counterActions';
+import { login } from '../../redux/actions/authActions';
+import { increaseCounter, decreaseCounter } from '../../redux/actions/counterActions';
 
 // Screen: Counter
 // eslint-disable-next-line react/prefer-stateless-function

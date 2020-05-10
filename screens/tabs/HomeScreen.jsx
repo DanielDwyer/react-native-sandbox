@@ -12,9 +12,9 @@ import {
   getGeolocationPermissionStatus,
   requestGeolocationPermission,
   getGeolocation,
-} from '../redux/actions/geolocationActions';
+} from '../../redux/actions/geolocationActions';
 
-import { MonoText } from '../components/StyledText';
+import { MonoText } from '../../components/StyledText';
 
 class HomeScreen extends React.Component {
   async componentDidMount() {
@@ -34,9 +34,9 @@ class HomeScreen extends React.Component {
               // eslint-disable-next-line no-undef
               __DEV__
                 // eslint-disable-next-line global-require
-                ? require('../assets/images/robot-dev.png')
+                ? require('../../assets/images/robot-dev.png')
                 // eslint-disable-next-line global-require
-                : require('../assets/images/robot-prod.png')
+                : require('../../assets/images/robot-prod.png')
             }
               style={styles.welcomeImage}
             />

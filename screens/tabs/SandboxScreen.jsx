@@ -8,7 +8,7 @@ import { ScrollView, RectButton } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 
 
-import { MonoText } from '../components/StyledText';
+import { MonoText } from '../../components/StyledText';
 
 export default function SandBoxScreen({ navigation }) {
   return (
@@ -20,9 +20,9 @@ export default function SandBoxScreen({ navigation }) {
               // eslint-disable-next-line no-undef
               __DEV__
                 // eslint-disable-next-line global-require
-                ? require('../assets/images/robot-dev.png')
+                ? require('../../assets/images/robot-dev.png')
                 // eslint-disable-next-line global-require
-                : require('../assets/images/robot-prod.png')
+                : require('../../assets/images/robot-prod.png')
             }
             style={styles.welcomeImage}
           />
